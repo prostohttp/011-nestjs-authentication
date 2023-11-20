@@ -14,18 +14,14 @@ import { BooksService } from "./books.service";
 import { BookDocument } from "../schemas/book.schema";
 import { CreateBookDto } from "./dto/create.book.dto";
 import { RequestType } from "./interfaces/requestType";
-import { LoggerInterceptor } from "src/logger/logger.interceptor";
 import { validationBookSchema } from "src/validation/schemas/joi.validation.book";
 import { BooksValidationPipe } from "src/validation/joi.book.validation.pipe";
-import { HttpExceptionFilter } from "src/filters/http.exception.filter";
 
-@UseInterceptors(LoggerInterceptor)
 @Controller("books")
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @UsePipes(new BooksValidationPipe(validationBookSchema))
-  @UseFilters(new HttpExceptionFilter())
   @Post()
   async createBook(
     @Body() book: CreateBookDto,
