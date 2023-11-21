@@ -33,7 +33,7 @@ export class UserService {
   }
 
   async findOne(email: string): Promise<User | undefined> {
-    const user = await this.userModel.findOne({ email: email });
+    const user = await this.userModel.findOne({ email: email }).select("-__v");
     if (!user) {
       throw new HttpException("Пользователь не найден", 404);
     }

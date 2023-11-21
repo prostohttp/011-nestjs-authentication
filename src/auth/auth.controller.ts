@@ -12,13 +12,18 @@ export class AuthController {
 
   @Post("signup")
   async signup(@Body() user: CreateUserDto): Promise<UserDocument> {
-    return await this.authService.signup(user);
+    return await this.authService.signUp(user);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post("signin")
   async signin(@Body() payload: UserAuth) {
     return this.authService.validateUser(payload);
+  }
+
+  @Post("signout")
+  async signOut(@Body("token") token: string) {
+    return this.authService.signOut(token);
   }
 
   @Post("token")
